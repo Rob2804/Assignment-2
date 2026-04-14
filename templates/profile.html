@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Your Profile - Skill Swap Hub{% endblock %}
+
+{% block content %}
+
+<header class="masthead" style="background-image: url({{ url_for('static', filename='assets/img/home-bg.webp') }})">
+    <div class="container">
+        <div class="site-heading text-center text-white">
+            <h1>Your Profile</h1>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 mt-5">
+
+    <div class="text-center mb-4">
+        <img src="{{ url_for('static', filename=user.profile_photo) }}"
+             class="rounded-circle"
+             width="250"
+             alt="Profile Photo"
+             style="object-fit: cover; height: 250px;">
+        <p class="mt-2">
+            <a href="{{ url_for('edit_profile') }}">Change Photo / Edit Profile</a>
+        </p>
+    </div>
+
+    <h3>Profile Details</h3>
+    <ul>
+        <li><strong>Username:</strong> {{ user.username }}</li>
+        <li><strong>Email:</strong> {{ user.email }}</li>
+        <li><strong>Bio:</strong> {{ user.bio if user.bio else "No bio added yet." }}</li>
+        <li><strong>Hobbies/Skills:</strong> {{ user.hobbies if user.hobbies else "No hobbies listed yet." }}</li>
+        <li><strong>Member Since:</strong> {{ user.created_at.strftime('%d %B %Y') }}</li>
+    </ul>
+
+    <p class="mt-3">
+        <a href="{{ url_for('edit_profile') }}" class="btn btn-outline-primary">Edit Profile</a>
+    </p>
+
+    <h3 class="mt-4">Your Posts</h3>
+
+    {% if user_resources %}
+        <ul>
+            {% for resource in user_resources %}
+                <li class="mb-2">
+                    {% if resource.link %}
+                        <a href="{{ resource.link }}" target="_blank">{{ resource.title }}</a>
+                    {% else %}
+                        {{ resource.title }}
+                    {% endif %}
+                    {% if resource.category %}
+                        - {{ resource.category }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not shared any resources yet.</p>
+        <a href="{{ url_for('post_resource') }}" class="btn btn-primary">Share Your First Skill</a>
+    {% endif %}
+
+</div>
+
+{% endblock %}

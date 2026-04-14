@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ resource.title }} - Skill Swap Hub{% endblock %}
+
+{% block content %}
+
+<header class="masthead" style="background-image: url({{ url_for('static', filename='assets/img/home-bg.webp') }})">
+    <div class="container">
+        <div class="site-heading text-center text-white">
+            <h1>{{ resource.title }}</h1>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 mt-5">
+
+    <p class="text-muted">
+        Category: {{ resource.category if resource.category else "Other" }}
+        • Posted by {{ resource.author }}
+        • {{ resource.created_at.strftime('%d %b %Y at %H:%M') }}
+    </p>
+
+    <hr>
+
+    <h3>Description</h3>
+    <p>{{ resource.description }}</p>
+
+    <div class="mt-4">
+
+        {% if resource.link %}
+        <a href="{{ resource.link }}" target="_blank" class="btn btn-primary me-2">
+            Open Resource Link
+        </a>
+        {% endif %}
+
+        <a href="{{ url_for('like', resource_id=resource._id) }}"
+           class="btn btn-outline-secondary me-2">
+            👍 Like ({{ resource.likes if resource.likes else 0 }})
+        </a>
+
+        <a href="{{ url_for('timeline') }}" class="btn btn-outline-primary">
+            Back to Timeline
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

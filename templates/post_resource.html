@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Share a Skill - Skill Swap Hub{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url({{ url_for('static', filename='assets/img/home-bg.webp') }})">
+    <div class="container">
+        <div class="site-heading text-center text-white">
+        </div>
+    </div>
+</header>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h2 class="card-title text-center mb-4">
+                    <i class="bi bi-plus-circle"></i> Share a Skill
+                </h2>
+                <p class="text-muted text-center mb-4">
+                    Share a resource, tutorial, or tip with the community.
+                </p>
+
+                <!-- Resource Submission Form -->
+                <form method="POST" action="{{ url_for('post_resource') }}">
+
+                    <!-- Title (required) -->
+                    <div class="mb-3">
+                        <label for="title" class="form-label">
+                            Title <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="title"
+                               name="title" required
+                               placeholder="e.g. Introduction to Python Lists">
+                    </div>
+
+                    <!-- Link (optional) -->
+                    <div class="mb-3">
+                        <label for="link" class="form-label">Link</label>
+                        <input type="url" class="form-control" id="link"
+                               name="link"
+                               placeholder="https://example.com/tutorial">
+                        <div class="form-text">
+                            Optional. Add a URL to the resource.
+                        </div>
+                    </div>
+
+                    <!-- Description (required) -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">
+                            Description <span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control" id="description"
+                                  name="description" rows="3" required
+                                  placeholder="Briefly describe what this resource covers and why it is useful...">
+                        </textarea>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category" name="category">
+                            <option value="">Select a category...</option>
+                            <option value="Programming">Programming</option>
+                            <option value="Design">Design</option>
+                            <option value="Music">Music</option>
+                            <option value="Photography">Photography</option>
+                            <option value="Languages">Languages</option>
+                            <option value="Cooking">Cooking</option>
+                            <option value="Fitness">Fitness</option>
+                            <option value="AI Tools">AI Tools</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-share"></i> Share Resource
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

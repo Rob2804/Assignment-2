@@ -1,0 +1,3 @@
+Place a default profile placeholder image here named "placeholder.png".
+You can use any generic avatar image (e.g. from https://ui-avatars.com/).
+The application expects this file at: static/uploads/placeholder.png

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}Skills Timeline - Skill Swap Hub{% endblock %}
+
+{% block content %}
+
+<header class="masthead" style="background-image: url({{ url_for('static', filename='assets/img/home-bg.webp') }})">
+    <div class="container">
+        <div class="site-heading text-center text-white">
+            <h1>Skills Timeline</h1>
+            <span class="subheading">Explore resources shared by the community</span>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 mt-5">
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+
+            <form method="GET" action="{{ url_for('timeline') }}" class="mb-4">
+                <input class="form-control"
+                       type="text"
+                       name="q"
+                       placeholder="Search resources or tools..."
+                       value="{{ search_query }}">
+            </form>
+
+            <form method="GET" action="{{ url_for('timeline') }}" class="mb-4">
+                <div class="row g-2">
+                    <div class="col-md-8">
+                        <select class="form-select" name="category">
+                            <option value="">Filter by category</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat }}" {% if cat == selected_category %}selected{% endif %}>
+                                {{ cat }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    {% if search_query %}
+                    <input type="hidden" name="q" value="{{ search_query }}">
+                    {% endif %}
+
+                    <div class="col-md-4 d-grid">
+                        <button type="submit" class="btn btn-outline-primary">Filter</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if selected_category or search_query %}
+            <div class="mb-4 text-center">
+                <p class="text-muted mb-2">
+                    Showing results
+                    {% if search_query %}for "<strong>{{ search_query }}</strong>"{% endif %}
+                    {% if selected_category %}in <strong>{{ selected_category }}</strong>{% endif %}
+                </p>
+                <a href="{{ url_for('timeline') }}" class="btn btn-outline-secondary btn-sm">Clear filters</a>
+            </div>
+            {% endif %}
+
+            {% if session.get('username') %}
+            <div class="mb-4 text-center">
+                <a href="{{ url_for('post_resource') }}" class="btn btn-primary">
+                    Share a Skill
+                </a>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+
+            {% if resources %}
+                {% for resource in resources %}
+                <div class="post-preview">
+
+                    <a href="{{ url_for('view_resource', resource_id=resource._id) }}">
+                        <h2 class="post-title">{{ resource.title }}</h2>
+                        <h3 class="post-subtitle">{{ resource.description }}</h3>
+                    </a>
+
+                    <p class="post-meta">
+                        Category: {{ resource.category if resource.category else "Other" }}
+                        • Posted by {{ resource.author }}
+                        • {{ resource.created_at.strftime('%d %b %Y at %H:%M') }}
+                    </p>
+
+                    {% if resource.link %}
+                    <a href="{{ resource.link }}" target="_blank" class="btn btn-sm btn-outline-primary mb-3">
+                        View Resource Link
+                    </a>
+                    {% endif %}
+
+                    <a href="{{ url_for('like', resource_id=resource._id) }}"
+                       class="btn btn-sm btn-outline-secondary mb-3">
+                        👍 Like ({{ resource.likes if resource.likes else 0 }})
+                    </a>
+
+                </div>
+                <hr>
+                {% endfor %}
+            {% else %}
+                <div class="text-center py-5">
+                    {% if search_query or selected_category %}
+                        <p class="text-muted">No results found. Try a different search or category.</p>
+                        <a href="{{ url_for('timeline') }}" class="btn btn-outline-primary">Clear Filters</a>
+                    {% else %}
+                        <p class="text-muted">No skills have been shared yet. Be the first!</p>
+                        {% if session.get('username') %}
+                        <a href="{{ url_for('post_resource') }}" class="btn btn-primary">Share a Skill</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

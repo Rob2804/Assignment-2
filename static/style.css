@@ -1,0 +1,67 @@
+/* =============================================================================
+   Skill Swap Hub - Custom Styles
+   COM4113 Tech Stack - Leeds Trinity University
+   =============================================================================
+   This stylesheet adds custom styling on top of Bootstrap 5.
+   ============================================================================= */
+
+/* General body styling */
+body {
+    background-colour: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Navbar customisation */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+/* Card hover effect for timeline */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Badge styling for categories */
+.badge {
+    font-weight: 500;
+    padding: 0.4em 0.8em;
+}
+
+/* Profile photo styling */
+.rounded-circle {
+    border: 3px solid #dee2e6;
+}
+
+/* Form cards */
+.card .card-title {
+    colour: #212529;
+}
+
+/* Empty state styling */
+.text-muted i {
+    opacity: 0.5;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile - Skill Swap Hub{% endblock %}
+
+{% block content %}
+
+<header class="masthead" style="background-image: url({{ url_for('static', filename='assets/img/home-bg.webp') }})">
+    <div class="container">
+        <div class="site-heading text-center text-white">
+            <h1>Edit Profile</h1>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 mt-5">
+    <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data">
+
+        <div class="text-center mb-4">
+            <img src="{{ url_for('static', filename=user.profile_photo) }}"
+                 alt="Current profile photo"
+                 class="rounded-circle"
+                 width="150"
+                 height="150"
+                 style="object-fit: cover;">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Change Profile Photo</label>
+            <input class="form-control" type="file" name="profile_photo" accept="image/png, image/jpeg, image/gif">
+        </div>
+
+        <div class="form-floating mb-3">
+            <input class="form-control"
+                   id="email"
+                   name="email"
+                   type="email"
+                   placeholder="Email"
+                   value="{{ user.email }}">
+            <label for="email">Email</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <textarea class="form-control"
+                      id="bio"
+                      name="bio"
+                      placeholder="Bio"
+                      style="height: 6rem">{{ user.bio }}</textarea>
+            <label for="bio">Bio</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input class="form-control"
+                   id="hobbies"
+                   name="hobbies"
+                   type="text"
+                   placeholder="Hobbies"
+                   value="{{ user.hobbies }}">
+            <label for="hobbies">Hobbies</label>
+        </div>
+
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="submit">Save Changes</button>
+            <a href="{{ url_for('profile') }}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}
